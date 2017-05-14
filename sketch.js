@@ -64,22 +64,13 @@ function draw() {
         push();
         translate(player.body.position.x + 30,player.body.position.y - 5);
         fill(0,255, 0);
-<<<<<<< HEAD
         let dna = manager.playersai[manager.toTest].dna;
         let min = 0;
         let max = 0;
-        if (dna.fitm == fit) {
+        if (dna.fitm < fit) {
             console.log("active");
             if (dna.nmfitmch) {
                 //case mut mingit
-=======
-        let actplayer = manager.playersai[manager.toTest].dna;
-        let min = 0;
-        let max = 0;
-        if (dna.fitm == fit) {
-            if (dna.nmfitmch) {
-                //case mut min
->>>>>>> parent of 920258c... Revert "to reset"
                     max = dna.max;
                     min = dna.min + dna.fitmch;
             } else {

@@ -66,7 +66,7 @@ function eng() {
                 for (let i = 0; i < this.maxToTest; i++) {
                     let min = bestDna2.min + floor(random(-1,1) * 10);
                     let max = bestDna2.max + floor(random(-1,1) * 10);
-                    let fitm = bestDna.fitm + floor(random(-1 ,1) * 10);
+                    let fitm = bestDna.fitm + floor(random(-1 ,2));
                     let fitmch = bestDna.fitmch + floor(random(-1, 1) * 10);
                     let fitmchmn = (bestDna.nmfitmch == bestDna2.nmfitmch) ? bestDna.nmfitmch : randomBoll();
                     let dna = new Dna(min, max, fitm, fitmch, fitmchmn);
@@ -104,7 +104,7 @@ function aiPlayer(dna) {
     this.dna = dna;
 
     this.calc = function(d) {
-        if (this.dna.fitm == fit) {
+        if (this.dna.fitm < fit) {
             if (this.dna.nmfitmch) {
                 //case mut min
                 return (this.dna.max > 0) ? (d > this.dna.min + this.dna.fitmch && d < this.dna.max) : (d < this.dna.min + this.dna.fitmch && d > this.dna.max);
