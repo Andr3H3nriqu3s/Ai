@@ -64,8 +64,24 @@ function draw() {
         push();
         translate(player.body.position.x + 30,player.body.position.y - 5);
         fill(0,255, 0);
-        let min = manager.playersai[manager.toTest].dna.min;
-        let max = manager.playersai[manager.toTest].dna.max;
+        let dna = manager.playersai[manager.toTest].dna;
+        let min = 0;
+        let max = 0;
+        if (dna.fitm == fit) {
+            console.log("active");
+            if (dna.nmfitmch) {
+                //case mut mingit
+                    max = dna.max;
+                    min = dna.min + dna.fitmch;
+            } else {
+                //case mut max
+                    min = dna.min;
+                    max = dna.max + dna.fitmch;
+            }
+        } else {
+            min = manager.playersai[manager.toTest].dna.min;
+            max = manager.playersai[manager.toTest].dna.max;
+        }
         rect(0 + min ,0, 0 + max, 10);
         pop();
     }
@@ -85,4 +101,8 @@ function keyboard() {
         player.body.force.y -= 0.03 /*+ (fit % 39) / 100;*/
         //console.log(player.body.force.y);
     }
+}
+
+function randomBoll() {
+    return (floor(random(0, 100)) > 50) ? true : false;
 }
