@@ -5,8 +5,7 @@ function map() {
 }
 
 function obj(x ,y) {
-
-    this.tick = function() {
-        
+    this.color = function() {
+        fill(255, 0, 0);
     }
 }
