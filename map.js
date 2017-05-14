@@ -1,4 +1,4 @@
-function map() {
+function Map() {
     this.objs = [];
     //this.blocksize;
     //this.blockheigh;
