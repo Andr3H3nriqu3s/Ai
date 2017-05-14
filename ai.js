@@ -1,10 +1,10 @@
-function AI() {
+function eng() {
 
     this.playersai = [];
 
     this.start = true;
     this.toTest = 0;
-    this.maxToTest = 10;
+    this.maxToTest = 5;
     this.generation = 0;
 
     this.tick = function() {
@@ -17,9 +17,11 @@ function AI() {
                 let dna = new Dna(min, max);
                 this.playersai[i] = new aiPlayer(dna);
             }
+            console.log("gen complete");
         }
 
         if (pause) {
+            //console.log("teste");
             if (this.toTest + 1 == this.maxToTest) {
                 let bestDna  = undefined;
                 let bestDna2 = undefined;
@@ -27,15 +29,16 @@ function AI() {
                 let bestFit2 = 0;
                 for (let a in this.playersai) {
                     let b = this.playersai[a];
-                    if (b.fit < bestFit) {
+                    console.log(b);
+                    if (b.fit > bestFit) {
                         bestFit2 = bestFit;
                         bestFit = b.fit;
                         bestDna2 = bestDna;
                         bestDna = b.dna;
-                    }else(b.fit < bestFit2) {
+                    }else if(b.fit > bestFit2) {
                         bestFit2 = b.fit;
                         bestDna2 = b.dna;
-                    }else (b.fit == bestFit) {
+                    }else if(b.fit == bestFit) {
                         bestFit2 = bestFit;
                         bestFit = b.fit;
                         bestDna2 = bestDna;
@@ -43,7 +46,10 @@ function AI() {
                     }
                 }
 
+                console.log("bestDna:" + bestDna + ",bestDna2:" + bestDna2 + ",bestFit:" + bestFit + ",bestFit2:" + bestFit2);
+
                 if  (bestDna == undefined && bestDna2 == undefined) {
+                    console.log("error");
                     this.start = true;
                     return;
                 }
@@ -56,23 +62,40 @@ function AI() {
                     let dna = new Dna(min, max);
                     this.playersai[i] = new aiPlayer(dna);
                 }
+                this.generation++;
+                this.toTest = 0;
+                console.log("gen:" + this.generation);
+                pause = false;
             } else {
                 this.toTest++;
                 pause = false;
+                console.log("Fail next");
             }
-            return;
+        } else {
+            let e = mape.objs.x;
+            let d = e - (player.body.position.x + 30);
+            if (this.playersai[this.toTest].calc(d)) {
+                keyboard();
+            }
+            //console.log(this.toTest + ":" + this.generation + ":" + d);
         }
+        //push();
+        //translate(60, 450);
 
+        //pop();
     }
 
+    this.updateFit = function() {
+        this.playersai[this.toTest].fit = fit;
+    }
 }
 
 function aiPlayer(dna) {
     this.fit = 0;
     this.dna = dna;
 
-    this.calc = function() {
-        return (d > dna.min && d < dna.max);
+    this.calc = function(d) {
+        return (dna.max > 0) ? (d > dna.min && d < dna.max) : (d < dna.min && d > dna.max) ;
     }
 }
 

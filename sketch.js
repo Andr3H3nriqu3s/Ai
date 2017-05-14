@@ -12,6 +12,7 @@ var lfit = 0;
 var btt;
 var pause = false;
 var ai = true;
+var ftime;
 var manager;
 
 function setup() {
@@ -23,27 +24,25 @@ function setup() {
     btt = createButton('Pause');
     btt.position(0, 480);
     btt.mousePressed(function() {pause = !pause});
-    manager = new AI();
+    manager = new eng();
+    ftime = true;
 }
 
 function draw() {
-    if (ai) {
-        manager.tick();
+    if (!ftime) {
+        //console.log("teste1");
+        if (ai) {
+            //console.log("teste");
+            manager.tick();
+        }
     }
+
     if (pause) {
         return;
     }
     if(fit != lfit) {
         lfit = fit;
-        console.log(fit);
-        if (fit == 0) {
-            pause = true;
-        }
-
-        if (ai) {
-            manager.tick();
-        }
-
+        //console.log(fit);
         return;
     }
     background(51);
@@ -51,9 +50,19 @@ function draw() {
     player.show();
     mape.tick();
     world.gravity.y = 1 + fit;
+
+    textSize(15);
+    fill(255, 0, 0);
+    text("N:" + manager.toTest, 60,450, 40, 40);
+    text ("G:" + manager.generation, 60 + 40 + 10, 450, 40, 40);
+    text("d:" + (mape.objs.x - (player.body.position.x + 30)), 60 + 40 + 10 + 40 +10, 450, 40, 40);
+    text("fit" + fit, 60 + 40 + 10 + 40 + 10 + 40 + 10, 450, 40 ,40);
 }
 
 function keyPressed() {
+    if (ai) {
+        return;
+    }
     if (keyCode == 32) {
         keyboard();
     }
