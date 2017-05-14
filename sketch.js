@@ -12,8 +12,7 @@ var lfit = 0;
 var btt;
 var pause = false;
 var ai = true;
-
-var gameOver = false;
+var manager;
 
 function setup() {
     createCanvas(500, 500);
@@ -24,9 +23,13 @@ function setup() {
     btt = createButton('Pause');
     btt.position(0, 480);
     btt.mousePressed(function() {pause = !pause});
+    manager = new AI();
 }
 
 function draw() {
+    if (ai) {
+        manager.tick();
+    }
     if (pause) {
         return;
     }
@@ -36,6 +39,12 @@ function draw() {
         if (fit == 0) {
             pause = true;
         }
+
+        if (ai) {
+            manager.tick();
+        }
+
+        return;
     }
     background(51);
     Engine.update(engine);
