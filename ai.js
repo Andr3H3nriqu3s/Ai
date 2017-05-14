@@ -14,10 +14,7 @@ function eng() {
             for (let i = 0; i < this.maxToTest; i++) {
                 let min = floor(random(0,10));
                 let max = floor(random(5, 15));
-                let fitm = floor(random(5, 10));
-                let fitmch = floor(random(-30, 30));
-                let fitmchmn = randomBoll();
-                let dna = new Dna(min, max, fitm, fitmch, fitmchmn);
+                let dna = new Dna(min, max);
                 this.playersai[i] = new aiPlayer(dna);
             }
             console.log("gen complete");
@@ -64,12 +61,9 @@ function eng() {
                 playersai = [];
 
                 for (let i = 0; i < this.maxToTest; i++) {
-                    let min = bestDna2.min + floor(random(-1,1) * 10);
+                    let min = bestDna.min + floor(random(-1,1) * 10);
                     let max = bestDna2.max + floor(random(-1,1) * 10);
-                    let fitm = bestDna.fitm + floor(random(-1 ,1) * 10);
-                    let fitmch = bestDna.fitmch + floor(random(-1, 1) * 10);
-                    let fitmchmn = (bestDna.nmfitmch == bestDna2.nmfitmch) ? bestDna.nmfitmch : randomBoll();
-                    let dna = new Dna(min, max, fitm, fitmch, fitmchmn);
+                    let dna = new Dna(min, max);
                     this.playersai[i] = new aiPlayer(dna);
                 }
                 this.generation++;
@@ -87,6 +81,7 @@ function eng() {
             if (this.playersai[this.toTest].calc(d)) {
                 keyboard();
             }
+            //console.log(this.toTest + ":" + this.generation + ":" + d);
         }
         //push();
         //translate(60, 450);
@@ -104,23 +99,11 @@ function aiPlayer(dna) {
     this.dna = dna;
 
     this.calc = function(d) {
-        if (this.dna.fitm == fit) {
-            if (this.dna.nmfitmch) {
-                //case mut min
-                return (this.dna.max > 0) ? (d > this.dna.min + this.dna.fitmch && d < this.dna.max) : (d < this.dna.min + this.dna.fitmch && d > this.dna.max);
-            } else {
-                //case mut max
-                return (this.dna.max + this.dna.fitmch > 0) ? (d > this.dna.min && d < this.dna.max + + this.dna.fitmch) : (d < this.dna.min && d > this.dna.max + this.dna.fitmch);
-            }
-        }
-        return (this.dna.max > 0) ? (d > this.dna.min && d < this.dna.max) : (d < this.dna.min && d > this.dna.max) ;
+        return (dna.max > 0) ? (d > dna.min && d < dna.max) : (d < dna.min && d > dna.max) ;
     }
 }
 
-function Dna(min, max, fitm, fitmch, nmfitmch) {
+function Dna(min, max) {
     this.min = min;
     this.max = max;
-    this.fitm = fitm;
-    this.fitmch = fitmch;
-    this.nmfitmch = nmfitmch;
 }
