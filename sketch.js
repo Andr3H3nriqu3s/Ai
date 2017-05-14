@@ -14,6 +14,7 @@ var pause = false;
 var ai = true;
 var ftime;
 var manager;
+var printSquare;
 
 function setup() {
     createCanvas(500, 500);
@@ -26,6 +27,7 @@ function setup() {
     btt.mousePressed(function() {pause = !pause});
     manager = new eng();
     ftime = true;
+    printSquare = false;
 }
 
 function draw() {
@@ -49,7 +51,7 @@ function draw() {
     Engine.update(engine);
     player.show();
     mape.tick();
-    world.gravity.y = 1 + fit;
+    //world.gravity.y = 1 + fit;
 
     textSize(15);
     fill(255, 0, 0);
@@ -57,6 +59,16 @@ function draw() {
     text ("G:" + manager.generation, 60 + 40 + 10, 450, 40, 40);
     text("d:" + (mape.objs.x - (player.body.position.x + 30)), 60 + 40 + 10 + 40 +10, 450, 40, 40);
     text("fit" + fit, 60 + 40 + 10 + 40 + 10 + 40 + 10, 450, 40 ,40);
+
+    if (ai && !ftime && printSquare) {
+        push();
+        translate(player.body.position.x + 30,player.body.position.y - 5);
+        fill(0,255, 0);
+        let min = manager.playersai[manager.toTest].dna.min;
+        let max = manager.playersai[manager.toTest].dna.max;
+        rect(0 + min ,0, 0 + max, 10);
+        pop();
+    }
 }
 
 function keyPressed() {
@@ -70,7 +82,7 @@ function keyPressed() {
 
 function keyboard() {
     if(floor(player.body.position.y) == 270) {
-        player.body.force.y -= 0.03 + fit / 100;
+        player.body.force.y -= 0.03 /*+ (fit % 39) / 100;*/
         //console.log(player.body.force.y);
     }
 }

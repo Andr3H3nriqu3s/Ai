@@ -48,7 +48,7 @@ function Obj(x) {
             this.x = width;
             fit++;
         }
-        this.x -= 2 + fit;
+        this.x -= 2 + (fit % 39);
 
         if (collideRectRect(player.body.position.x, player.body.position.y, 30, 30, /*2nd  rect*/this.x , 270, 30, 30)) {
             //console.log("collide");

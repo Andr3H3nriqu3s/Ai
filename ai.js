@@ -18,6 +18,7 @@ function eng() {
                 this.playersai[i] = new aiPlayer(dna);
             }
             console.log("gen complete");
+            printSquare = true;
         }
 
         if (pause) {
@@ -43,6 +44,9 @@ function eng() {
                         bestFit = b.fit;
                         bestDna2 = bestDna;
                         bestDna = b.dna;
+                    }else if(b.fit == bestFit2) {
+                        bestFit2 = b.fit;
+                        bestDna2 =  b.dna;
                     }
                 }
 
